@@ -67,11 +67,9 @@ static int			actual_output(t_format fmt, char *string)
 
 int					manage_unsigned(t_format fmt, va_list *ap)
 {
-	int					output_size;
 	unsigned long long	num;
 	char				*string;
 
-	output_size = 0;
 	if (fmt.len == hh)
 		num = (unsigned char)va_arg(*ap, unsigned);
 	else if (fmt.len == h && fmt.type == 'U')

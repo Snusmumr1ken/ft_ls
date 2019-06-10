@@ -7,7 +7,7 @@
 
 #############           Varaibles            #############
 #                                                        #
-FILES = main
+FILES = main help
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addprefix obj/, $(addsuffix .o, $(FILES)))

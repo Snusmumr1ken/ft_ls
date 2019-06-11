@@ -22,16 +22,42 @@
 # include <errno.h>
 # include <stdbool.h>
 
-typedef struct	s_flags
+
+
+typedef struct			s_node
 {
-	bool	rec;
-	bool	all;
-	bool	lon;
-	bool	rev;
-	bool	time;
-}		t_flags;
+	char				*name;
+	struct s_file_node	*next;
+}						t_node;
 
-void		help(void);
+/*
+ ** struct s_flags contains
+ ** bool flags
+*/
 
+typedef struct			s_flags
+{
+	bool				R;
+	bool				a;
+	bool				l;
+	bool				r;
+	bool				t;
+	bool				h;
+}						t_flags;
+
+/*
+ ** struct s_ls contains all
+ ** nessesary data for ls
+*/
+
+typedef struct			s_ls
+{
+	t_flags				flags;
+}						t_ls;
+
+
+void					show_help(void);
+void					parse_arguments(int argc, char **argv, t_ls *data);
+void					set_data_to_null(t_ls *data);
 
 #endif

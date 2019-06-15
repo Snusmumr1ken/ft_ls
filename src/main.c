@@ -18,28 +18,29 @@ int		main(int argc, char **argv)
 	struct dirent	*sd;
 	t_ls			data;
 
-	set_data_to_null(&data);
+	init_data(&data);
 
-	(argc > 1) ? parse_arguments(argc, argv, &data) : ft_printf("no args\n");
+	(argc > 1) ? parse_arguments(argc, argv, &data) : 0;
 
 	if (data.flags.h == 1)
 	{
 		show_help();
 		exit(0);
 	}
-	
-	/*dir = opendir(".");
-	if (dir == NULL)
-	{
-		perror("opendir");
-		exit(1);
-	}
-	while ((sd = readdir(dir)) != NULL)
-	{
-		if (sd->d_name[0] != '.')
-			ft_printf("%c %s\n", sd->d_type, sd->d_name);
-	}*/
-
-	//closedir(dir);
 	return (0);
 }
+
+
+/*dir = opendir(".");
+if (dir == NULL)
+{
+	perror("opendir");
+	exit(1);
+}
+while ((sd = readdir(dir)) != NULL)
+{
+	if (sd->d_name[0] != '.')
+		ft_printf("%c %s\n", sd->d_type, sd->d_name);
+}*/
+
+//closedir(dir);

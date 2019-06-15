@@ -7,7 +7,7 @@
 
 #############           Varaibles            #############
 #                                                        #
-FILES = main help
+FILES = main help argument_parsing work_with_lists
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addprefix obj/, $(addsuffix .o, $(FILES)))

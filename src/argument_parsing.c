@@ -20,6 +20,36 @@ void			parse_arguments(int argc, char **argv, t_ls *data)
 	}
 }
 
+// 1 == file, 0 == dir
+static bool 	file_or_dir(char *arg)
+{
+	DIR			*dir;
+
+	if ((dir = opendir(arg)) == NULL && errno == 20)
+		return (1);
+	if (errno != 0)
+	{
+		perror("ls: unable to get access");
+		exit(2);
+	}
+	if ((closedir(dir)) != 0)
+	{
+		perror("ls: unable to close directory");
+		exit(2);
+	}
+	return (0);
+}
+
+static void		parse_dir_or_file_name(char *arg, t_ls *data)
+{
+	if ((file_or_dir(arg) == 0)
+	{
+		//добавляем в лист дирекорию
+	}
+	else
+		//добавляем в лист файл
+}
+
 static void		parse_long_arg(char *arg, t_ls *data)
 {
 	if (!ft_strcmp(arg, "--help"))
@@ -71,9 +101,3 @@ static void		parse_short_arg(char *arg, t_ls *data)
 		}
 	}
 }
-
-static void		parse_dir_or_file_name(char *arg, t_ls *data)
-{
-	ft_printf("file or dir %s detected!\n", arg);
-}
-

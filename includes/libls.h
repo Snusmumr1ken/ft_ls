@@ -18,17 +18,18 @@
 
 # include "../my_libft/includes/libft.h"
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <dirent.h>
 # include <errno.h>
 # include <stdbool.h>
 
 
-
-typedef struct			s_node
+typedef struct			s_list
 {
 	char				*name;
-	struct s_file_node	*next;
-}						t_node;
+	struct s_list		*list_inside;
+	struct s_list		*next;
+}						t_list;
 
 /*
  ** struct s_flags contains
@@ -53,11 +54,19 @@ typedef struct			s_flags
 typedef struct			s_ls
 {
 	t_flags				flags;
+	t_list				*dir;
+	t_list				*file;
 }						t_ls;
 
 
 void					show_help(void);
 void					parse_arguments(int argc, char **argv, t_ls *data);
-void					set_data_to_null(t_ls *data);
+void					init_data(t_ls *data);
+
+void					clear_all(t_list **head);
+void					create_list_inside_list(t_list **head, char *name, char *new_name);
+void					show(t_list **head);
+void					push(t_list **head, char *name);
+
 
 #endif

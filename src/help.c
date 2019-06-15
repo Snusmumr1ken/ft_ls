@@ -26,16 +26,6 @@ void	init_data(t_ls *data)
 	data->flags.l = 0;
 	data->flags.t = 0;
 	data->flags.h = 0;
-	data->dir = (t_list*)malloc(sizeof(t_list));
-	data->dir->name = NULL;
-	data->dir->next = NULL;
-	data->dir->list_inside = NULL;
-}
-
-void	clear_all(t_ls *data)
-{
-	/*
-	 * нужно пройтись по всем листам
-	 * и удалить все элементы
-	 */
+	data->dir = NULL;
+	data->file = NULL;
 }

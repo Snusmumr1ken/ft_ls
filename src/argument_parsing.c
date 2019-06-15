@@ -20,34 +20,20 @@ void			parse_arguments(int argc, char **argv, t_ls *data)
 	}
 }
 
-// 1 == file, 0 == dir
-static bool 	file_or_dir(char *arg)
+static void		parse_dir_or_file_name(char *arg, t_ls *data)
 {
 	DIR			*dir;
 
 	if ((dir = opendir(arg)) == NULL && errno == 20)
-		return (1);
-	if (errno != 0)
+		push(&data->file, arg);
+	else if (errno != 0 || ((closedir(dir)) != 0))
 	{
 		perror("ls: unable to get access");
+		clear_all(&data->dir);
+		clear_all(&data->file);
 		exit(2);
 	}
-	if ((closedir(dir)) != 0)
-	{
-		perror("ls: unable to close directory");
-		exit(2);
-	}
-	return (0);
-}
-
-static void		parse_dir_or_file_name(char *arg, t_ls *data)
-{
-	if ((file_or_dir(arg) == 0)
-	{
-		//добавляем в лист дирекорию
-	}
-	else
-		//добавляем в лист файл
+	push(&data->dir, arg);
 }
 
 static void		parse_long_arg(char *arg, t_ls *data)
@@ -69,6 +55,8 @@ static void		parse_long_arg(char *arg, t_ls *data)
 		write(2, "ls: unknown parametr <<", 23);
 		write(2, arg, ft_strlen(arg));
 		write(2, ">>\nYou can use <<ls --help>> to get additional info\n", 52);
+		clear_all(&data->dir);
+		clear_all(&data->file);
 		exit(2);
 	}
 }
@@ -76,11 +64,9 @@ static void		parse_long_arg(char *arg, t_ls *data)
 static void		parse_short_arg(char *arg, t_ls *data)
 {
 	short	i;
-	short	arg_len;
-	
-	arg_len = (short)ft_strlen(arg);
+
 	i = 0;
-	while (++i < arg_len)
+	while (++i < ft_strlen(arg))
 	{
 		if (arg[i] == 'r')
 			data->flags.r = 1;
@@ -97,6 +83,8 @@ static void		parse_short_arg(char *arg, t_ls *data)
 			write(2, "ls: unknown parametr <<", 23);
 			write(2, &arg[i], 1);
 			write(2, ">>\nYou can use <<ls --help>> to get additional info\n", 52);
+			clear_all(&data->dir);
+			clear_all(&data->file);
 			exit(2);
 		}
 	}

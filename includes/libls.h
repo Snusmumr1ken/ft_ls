@@ -54,8 +54,8 @@ typedef struct			s_flags
 typedef struct			s_ls
 {
 	t_flags				flags;
-	t_list				*dir;
-	t_list				*file;
+	t_list				*dir; //директории указанные как параметры, если параметров нет записывается текущая директория
+	t_list				*file; //файлы указанные как параметры
 }						t_ls;
 
 

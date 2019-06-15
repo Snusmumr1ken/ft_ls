@@ -20,13 +20,15 @@ int		main(int argc, char **argv)
 
 	init_data(&data);
 
-	(argc > 1) ? parse_arguments(argc, argv, &data) : 0;
+	(argc > 1) ? parse_arguments(argc, argv, &data) : push(&data.dir, ".");
 
 	if (data.flags.h == 1)
 	{
 		show_help();
 		exit(0);
 	}
+	clear_all(&data.dir);
+	clear_all(&data.file);
 	return (0);
 }
 

@@ -6,11 +6,11 @@ void	push(t_list **head, char *name)
 	t_list	*curr;
 
 	curr = *head;
-	while (curr->next)
+	while (curr)
 		curr = curr->next;
-	curr->next = (t_list*)malloc(sizeof(t_list));
-	curr->next->name = name;
-	curr->next->next = NULL;
+	curr = (t_list*)malloc(sizeof(t_list));
+	curr->name = name;
+	curr->next = NULL;
 	curr->list_inside = NULL;
 }
 
@@ -60,10 +60,10 @@ void	clear_all(t_list **head)
 	while ((*head))
 	{
 		curr = (*head);
-		while (curr->list_inside_list)
+		while (curr->list_inside)
 		{
-			curr_inside = curr->list_inside_list;
-			curr->list_inside_list = curr->list_inside_list->next;
+			curr_inside = curr->list_inside;
+			curr->list_inside = curr->list_inside->next;
 			free(curr_inside);
 		}
 		(*head) = (*head)->next;

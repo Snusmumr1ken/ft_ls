@@ -14,6 +14,7 @@
 
 void				show_all(t_ls *data)
 {
-	if (data->flags.f == 1)
-		show_list(&data->file);
+	if (data->flags.f == 0)
+		merge_sort(&data->file);
+	show_list(&data->file);
 }

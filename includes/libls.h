@@ -61,6 +61,7 @@ typedef struct			s_ls
 
 
 void					show_all(t_ls *data);
+void					merge_sort(t_list **headRef);
 void					show_help(void);
 void					parse_arguments(int argc, char **argv, t_ls *data);
 void					init_data(t_ls *data);

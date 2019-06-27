@@ -12,15 +12,14 @@
 
 #include "../includes/libls.h"
 
-void	push(t_list **head, char *name)
+void			push(t_list **head_ref, char *new_data)
 {
-	t_list *tmp;
+	t_list *new_node;
 
-	tmp = (t_list*)malloc(sizeof(t_list));
-	tmp->name = name;
-	tmp->next = (*head == NULL) ? NULL : *head;
-	tmp->list_inside = NULL;
-	*head = tmp;
+	new_node = (t_list*)malloc(sizeof(t_list));
+	new_node->name = new_data;
+	new_node->next = (*head_ref);
+	(*head_ref) = new_node;
 }
 
 void	show_list(t_list **head)

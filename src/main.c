@@ -25,8 +25,11 @@ int		main(int argc, char **argv)
 	if (data.flags.h == 1)
 	{
 		show_help();
+		clear_all(&data.dir);
+		clear_all(&data.file);
 		exit(0);
 	}
+	show_all(&data);
 	clear_all(&data.dir);
 	clear_all(&data.file);
 	return (0);

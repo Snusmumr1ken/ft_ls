@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   argument_parsing.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anyvchyk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/27 08:52:19 by anyvchyk          #+#    #+#             */
+/*   Updated: 2019/06/27 08:52:21 by anyvchyk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/libls.h"
 
 static void		parse_long_arg(char *arg, t_ls *data);
 static void		parse_short_arg(char *arg, t_ls *data);
 static void		parse_dir_or_file_name(char *arg, t_ls *data);
+static void		show_error_param(char *arg, t_ls *data);
 
 void			parse_arguments(int argc, char **argv, t_ls *data)
 {
@@ -28,12 +41,13 @@ static void		parse_dir_or_file_name(char *arg, t_ls *data)
 		push(&data->file, arg);
 	else if (errno != 0 || ((closedir(dir)) != 0))
 	{
-		perror("ls: unable to get access");
+		perror("ft_ls: unable to get access");
 		clear_all(&data->dir);
 		clear_all(&data->file);
 		exit(2);
 	}
-	push(&data->dir, arg);
+	else
+		push(&data->dir, arg);
 }
 
 static void		parse_long_arg(char *arg, t_ls *data)
@@ -51,14 +65,7 @@ static void		parse_long_arg(char *arg, t_ls *data)
 	else if (!ft_strcmp(arg, "--all"))
 		data->flags.a = 1;
 	else
-	{
-		write(2, "ls: unknown parametr <<", 23);
-		write(2, arg, ft_strlen(arg));
-		write(2, ">>\nYou can use <<ls --help>> to get additional info\n", 52);
-		clear_all(&data->dir);
-		clear_all(&data->file);
-		exit(2);
-	}
+		show_error_param(arg, data);
 }
 
 static void		parse_short_arg(char *arg, t_ls *data)
@@ -78,14 +85,19 @@ static void		parse_short_arg(char *arg, t_ls *data)
 			data->flags.R = 1;
 		else if (arg[i] == 'a')
 			data->flags.a = 1;
+		else if (arg[i] == 'f')
+			data->flags.f = 1;
 		else
-		{
-			write(2, "ls: unknown parametr <<", 23);
-			write(2, &arg[i], 1);
-			write(2, ">>\nYou can use <<ls --help>> to get additional info\n", 52);
-			clear_all(&data->dir);
-			clear_all(&data->file);
-			exit(2);
-		}
+			show_error_param(&arg[i], data);
 	}
+}
+
+static void		show_error_param(char *arg, t_ls *data)
+{
+	write(2, "ft_ls: unknown parametr <<", 26);
+	write(2, arg, ft_strlen(arg));
+	write(2, ">>\nYou can use <<ft_ls --help>> to get additional info\n", 55);
+	clear_all(&data->dir);
+	clear_all(&data->file);
+	exit(2);
 }

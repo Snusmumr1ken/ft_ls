@@ -1,33 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   work_with_lists.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anyvchyk <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/27 08:52:12 by anyvchyk          #+#    #+#             */
+/*   Updated: 2019/06/27 08:52:14 by anyvchyk         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/libls.h"
 
-//добавляет элемент в конец списка
 void	push(t_list **head, char *name)
 {
-	t_list	*curr;
+	t_list *tmp;
 
-	curr = *head;
-	while (curr)
-		curr = curr->next;
-	curr = (t_list*)malloc(sizeof(t_list));
-	curr->name = name;
-	curr->next = NULL;
-	curr->list_inside = NULL;
+	tmp = (t_list*)malloc(sizeof(t_list));
+	tmp->name = name;
+	tmp->next = (*head == NULL) ? NULL : *head;
+	tmp->list_inside = NULL;
+	*head = tmp;
 }
 
-//показывает данные каждого элемента в списке
-void	show(t_list **head)
+void	show_list(t_list **head)
 {
 	t_list	*curr;
 
 	curr = *head;
 	while (curr)
 	{
-		ft_printf("name = %s\n", curr->name);
+		write(1, curr->name, ft_strlen(curr->name));
+		write(1, "\n", 1);
 		curr = curr->next;
 	}
 }
 
-//создает лист new_name в листе name
 void	create_list_inside_list(t_list **head, char *name, char *new_name)
 {
 	t_list *curr;
@@ -51,7 +59,6 @@ void	create_list_inside_list(t_list **head, char *name, char *new_name)
 	curr->list_inside->next = NULL;
 }
 
-//очистка листов с листами
 void	clear_all(t_list **head)
 {
 	t_list *curr;

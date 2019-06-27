@@ -42,8 +42,8 @@ static void		parse_dir_or_file_name(char *arg, t_ls *data)
 	else if (errno != 0 || ((closedir(dir)) != 0))
 	{
 		perror("ft_ls: unable to get access");
-		clear_all(&data->dir);
-		clear_all(&data->file);
+		delete_list(&data->dir);
+		delete_list(&data->file);
 		exit(2);
 	}
 	else
@@ -97,7 +97,7 @@ static void		show_error_param(char *arg, t_ls *data)
 	write(2, "ft_ls: unknown parametr <<", 26);
 	write(2, arg, ft_strlen(arg));
 	write(2, ">>\nYou can use <<ft_ls --help>> to get additional info\n", 55);
-	clear_all(&data->dir);
-	clear_all(&data->file);
+	delete_list(&data->dir);
+	delete_list(&data->file);
 	exit(2);
 }

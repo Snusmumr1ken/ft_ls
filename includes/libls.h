@@ -27,7 +27,6 @@
 typedef struct			s_list
 {
 	char				*name;
-	struct s_list		*list_inside;
 	struct s_list		*next;
 }						t_list;
 
@@ -66,8 +65,7 @@ void					show_help(void);
 void					parse_arguments(int argc, char **argv, t_ls *data);
 void					init_data(t_ls *data);
 
-void					clear_all(t_list **head);
-void					create_list_inside_list(t_list **head, char *name, char *new_name);
+void					delete_list(t_list **head);
 void					show_list(t_list **head);
 void					push(t_list **head, char *name);
 

@@ -35,7 +35,7 @@ void	show_list(t_list **head)
 	}
 }
 
-void	create_list_inside_list(t_list **head, char *name, char *new_name)
+/*void	create_list_inside_list(t_list **head, char *name, char *new_name)
 {
 	t_list *curr;
 
@@ -56,23 +56,19 @@ void	create_list_inside_list(t_list **head, char *name, char *new_name)
 	curr->list_inside = (t_list*)malloc(sizeof(t_list));
 	curr->list_inside->name = new_name;
 	curr->list_inside->next = NULL;
-}
+}*/
 
-void	clear_all(t_list **head)
+void	delete_list(t_list **head)
 {
-	t_list *curr;
-	t_list *curr_inside;
+	t_list		*curr;
+	t_list		*next;
 
-	while ((*head))
+	curr = *head;
+	while (curr != NULL)
 	{
-		curr = (*head);
-		while (curr->list_inside)
-		{
-			curr_inside = curr->list_inside;
-			curr->list_inside = curr->list_inside->next;
-			free(curr_inside);
-		}
-		(*head) = (*head)->next;
+		next = curr->next;
 		free(curr);
+		curr = next;
 	}
+	*head = NULL;
 }

@@ -50,8 +50,11 @@ static void		parse_dir_or_file_name(char *arg, t_ls *data)
 		delete_list(&data->file);
 		exit(2);
 	}
-	if (dir != NULL && (closedir(dir)) != 0)
+	errno = 0;
+	(dir) ? closedir(dir) : 0;
+	if (errno)
 	{
+		printf("arg = <<%s>>\n", arg);
 		perror("ft_ls: unable to close dir");
 		delete_list(&data->dir);
 		delete_list(&data->file);

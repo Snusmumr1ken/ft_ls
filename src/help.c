@@ -42,4 +42,5 @@ void	init_data(t_ls *data)
 	data->flags.f = 0;
 	data->dir = NULL;
 	data->file = NULL;
+	data->no_params = 1;
 }

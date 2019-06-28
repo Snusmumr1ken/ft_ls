@@ -35,29 +35,6 @@ void	show_list(t_list **head)
 	}
 }
 
-/*void	create_list_inside_list(t_list **head, char *name, char *new_name)
-{
-	t_list *curr;
-
-	curr = *head;
-	while (curr)
-	{
-		if (!ft_strcmp(curr->name, name))
-			break ;
-		curr = curr->next;
-	}
-	if (curr == NULL)
-	{
-		write(2, "error while creating list inside list\n", 38);
-		exit(2);
-	}
-	while (curr->list_inside)
-		curr->list_inside = curr->list_inside->next;
-	curr->list_inside = (t_list*)malloc(sizeof(t_list));
-	curr->list_inside->name = new_name;
-	curr->list_inside->next = NULL;
-}*/
-
 void	delete_list(t_list **head)
 {
 	t_list		*curr;

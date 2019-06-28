@@ -20,10 +20,8 @@ int		main(int argc, char **argv)
 
 	init_data(&data);
 
-	(argc > 1) ? parse_arguments(argc, argv, &data) : push(&data.dir, ".");
-
+	(argc > 1) ? parse_arguments(argc, argv, &data) : 0;
 	(data.flags.h == 1) ? show_help() : show_all(&data);
-
 	delete_list(&data.dir);
 	delete_list(&data.file);
 	return (0);

@@ -30,11 +30,6 @@ typedef struct			s_list
 	struct s_list		*next;
 }						t_list;
 
-/*
- ** struct s_flags contains
- ** bool flags
-*/
-
 typedef struct			s_flags
 {
 	bool				R;
@@ -46,21 +41,17 @@ typedef struct			s_flags
 	bool				f;
 }						t_flags;
 
-/*
- ** struct s_ls contains all
- ** nessesary data for ls
-*/
-
 typedef struct			s_ls
 {
 	t_flags				flags;
-	t_list				*dir; //директории указанные как параметры, если параметров нет записывается текущая директория
-	t_list				*file; //файлы указанные как параметры
+	t_list				*dir;
+	t_list				*file;
+	bool				no_params;
 }						t_ls;
 
 
 void					show_all(t_ls *data);
-void					merge_sort(t_list **headRef);
+void					merge_sort(t_list **head_ref, const int how_to_sort);
 void					show_help(void);
 void					parse_arguments(int argc, char **argv, t_ls *data);
 void					init_data(t_ls *data);

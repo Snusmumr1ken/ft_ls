@@ -14,7 +14,7 @@ void		Usage()
     return ;
 }
 
-void		RecDir(char *path, int flag)
+void		rec_dir(char *path, int flag)
 {
     DIR				*dp = opendir(path);
 	struct dirent	*ep;
@@ -46,7 +46,7 @@ void		RecDir(char *path, int flag)
 			if (flag && ep->d_type == 4)
 			{
 				sprintf(newdir, "%s/%s", path, ep->d_name);
-				RecDir(newdir, 1);
+				rec_dir(newdir, 1);
 			}
 		}
 	}
@@ -61,12 +61,12 @@ int main(int argc, char **argv)
         if (!(strcmp(argv[1], "-R"))) //и это флаг -R
         	Usage(); //показываем как пользоваться программой
         else // если два параметра и это не флаг -R
-        	RecDir(argv[1], 0); // вызываем НЕрекурсивную функцию чтения со вторым параметром
+        	rec_dir(argv[1], 0); // вызываем НЕрекурсивную функцию чтения со вторым параметром
         break;
 
     case 3: // если 3 параметра
         if (!(strcmp(argv[1], "-R"))) // второй это флаг -R
-        	RecDir(argv[2], 1); // вызываем рекурсивную функцию чтения с третьим параметром
+        	rec_dir(argv[2], 1); // вызываем рекурсивную функцию чтения с третьим параметром
         else
         	Usage();
         break;

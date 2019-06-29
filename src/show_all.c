@@ -18,17 +18,13 @@ void				show_param_files(t_ls *data);
 
 void				show_all(t_ls *data)
 {
-	t_list *curr;
-
 	if (data->flags.f == 0)
 		merge_sort(&data->dir, (data->flags.r == 0) ? 1 : 0);
 
-	curr = data->dir;
-	while (curr)
+	while (data->dir)
 	{
-		(data->dir_len > 1) ? ft_printf("%s:\n", data->dir->name) : 0;
 		show_param_dirs(data, data->dir->name);
-		curr = curr->next;
+		data->dir = data->dir->next;
 	}
 }
 
@@ -38,7 +34,8 @@ static void		show_param_dirs(t_ls *data, char *path)
 	struct dirent	*ep;
 	char			newdir[512];
 
-	(data->flags.R) ? ft_printf("%s:\n", path) : 0;
+	write(1, "\n", 1);
+	ft_printf(BLUE "%s:\n" WHITE, path);
 	get_files_names_from_dir(data, path);
 	if (data->flags.f == 0)
 		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);

@@ -29,8 +29,7 @@ void	show_list(t_list **head)
 	curr = *head;
 	while (curr)
 	{
-		write(1, curr->name, ft_strlen(curr->name));
-		write(1, "\n", 1);
+		ft_printf(GREEN "\t%s\n" WHITE, curr->name);
 		curr = curr->next;
 	}
 }

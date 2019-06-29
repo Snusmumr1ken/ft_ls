@@ -50,7 +50,6 @@ typedef struct			s_ls
 	t_list				*dir;
 	t_list				*file;
 	unsigned short		dir_len;
-	unsigned short		file_len;
 	bool				no_params;
 }						t_ls;
 

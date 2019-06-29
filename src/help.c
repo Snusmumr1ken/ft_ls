@@ -44,5 +44,4 @@ void	init_data(t_ls *data)
 	data->file = NULL;
 	data->no_params = 1;
 	data->dir_len = 0;
-	data->file_len = 0;
 }

@@ -19,9 +19,10 @@ int		main(int argc, char **argv)
 	t_ls			data;
 
 	init_data(&data);
-	(argc > 1) ? parse_arguments(argc, argv, &data) : push(&data.dir, ".");
+	(argc > 1) ? parse_arguments(argc, argv, &data) : 0;
 	if (data.flags.h == 0)
 	{
+		(data.file == NULL && data.dir_len == 0) ? push(&data.dir, ".") : 0;
 		show_param_files(&data);
 		show_all(&data);
 	}

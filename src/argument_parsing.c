@@ -12,31 +12,20 @@
 
 #include "../includes/libls.h"
 
-static void		parse_long_arg(char *arg, t_ls *data);
-static void		parse_short_arg(char *arg, t_ls *data);
-static void		parse_dir_or_file_name(char *arg, t_ls *data);
-static void		show_error_param(char *arg, t_ls *data);
-
-void			parse_arguments(int argc, char **argv, t_ls *data)
+static void		show_error_param(char *arg, t_ls *data)
 {
-	short	i;
-
-	i = 0;
-	while (++i < argc)
-	{
-		if (argv[i][0] != '-')
-			parse_dir_or_file_name(argv[i], data);
-		else if (argv[i][0] == '-' && argv[i][1] == '-')
-			parse_long_arg(argv[i], data);
-		else if (argv[i][0] == '-' && argv[i][1] != '-')
-			parse_short_arg(argv[i], data);
-	}
+	write(2, "ft_ls: unknown parametr <<", 26);
+	write(2, arg, ft_strlen(arg));
+	write(2, ">>\nYou can use <<ft_ls --help>> to get additional info\n", 55);
+	delete_list(&data->dir);
+	delete_list(&data->file);
+	exit(2);
 }
 
 static void		parse_dir_or_file_name(char *arg, t_ls *data)
 {
 	DIR			*dir;
-	int 		errno;
+	int			errno;
 
 	errno = 0;
 	dir = opendir(arg);
@@ -69,7 +58,7 @@ static void		parse_long_arg(char *arg, t_ls *data)
 	else if (!ft_strcmp(arg, "--long"))
 		data->flags.l = 1;
 	else if (!ft_strcmp(arg, "--recursive"))
-		data->flags.R = 1;
+		data->flags.rec = 1;
 	else if (!ft_strcmp(arg, "--all"))
 		data->flags.a = 1;
 	else
@@ -90,7 +79,7 @@ static void		parse_short_arg(char *arg, t_ls *data)
 		else if (arg[i] == 'l')
 			data->flags.l = 1;
 		else if (arg[i] == 'R')
-			data->flags.R = 1;
+			data->flags.rec = 1;
 		else if (arg[i] == 'a')
 			data->flags.a = 1;
 		else if (arg[i] == 'f')
@@ -100,12 +89,18 @@ static void		parse_short_arg(char *arg, t_ls *data)
 	}
 }
 
-static void		show_error_param(char *arg, t_ls *data)
+void			parse_arguments(int argc, char **argv, t_ls *data)
 {
-	write(2, "ft_ls: unknown parametr <<", 26);
-	write(2, arg, ft_strlen(arg));
-	write(2, ">>\nYou can use <<ft_ls --help>> to get additional info\n", 55);
-	delete_list(&data->dir);
-	delete_list(&data->file);
-	exit(2);
+	short	i;
+
+	i = 0;
+	while (++i < argc)
+	{
+		if (argv[i][0] != '-')
+			parse_dir_or_file_name(argv[i], data);
+		else if (argv[i][0] == '-' && argv[i][1] == '-')
+			parse_long_arg(argv[i], data);
+		else if (argv[i][0] == '-' && argv[i][1] != '-')
+			parse_short_arg(argv[i], data);
+	}
 }

@@ -15,7 +15,7 @@ OBJ = $(addprefix obj/, $(addsuffix .o, $(FILES)))
 
 INC = -I ./includes
 HEADER = ./includes/libls.h
-LIBFT = ./my_libft/libft.a
+LIBFT = ./libft/libft.a
 
 NAME = ft_ls
 
@@ -37,13 +37,13 @@ $(OBJ): obj/%.o : src/%.c $(HEADER) $(LIBFT)
 	@gcc -o $@ $(INC) -c $<
 
 $(LIBFT):
-	@make -C ./my_libft
+	@make -C ./libft
 
 libft_clean:
-	@make -C ./my_libft clean
+	@make -C ./libft clean
 
 libft_fclean:
-	@make -C ./my_libft fclean
+	@make -C ./libft fclean
 
 clean: libft_clean
 	@rm -rf $(OBJ)

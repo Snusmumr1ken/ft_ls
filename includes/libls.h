@@ -19,13 +19,12 @@
 
 #include <stdio.h>
 
-# include "../my_libft/includes/libft.h"
+# include "../libft/includes/libft.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <dirent.h>
 # include <errno.h>
 # include <stdbool.h>
-
 
 typedef struct			s_list
 {
@@ -35,7 +34,7 @@ typedef struct			s_list
 
 typedef struct			s_flags
 {
-	bool				R;
+	bool				rec;
 	bool				a;
 	bool				l;
 	bool				r;
@@ -59,10 +58,8 @@ void					merge_sort(t_list **head_ref, const int how_to_sort);
 void					show_help(void);
 void					parse_arguments(int argc, char **argv, t_ls *data);
 void					init_data(t_ls *data);
-
 void					delete_list(t_list **head);
 void					show_list(t_list **head);
 void					push(t_list **head, char *name);
-
 
 #endif

@@ -12,7 +12,7 @@
 
 #include "../includes/libls.h"
 
-void			push(t_list **head_ref, char *new_data)
+void	push(t_list **head_ref, char *new_data)
 {
 	t_list *new_node;
 

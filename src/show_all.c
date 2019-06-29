@@ -12,169 +12,6 @@
 
 #include "../includes/libls.h"
 
-static void			get_files_names_from_dir(t_ls *data, char *path);
-static void			show_param_dirs(t_ls *data, char *path);
-void				show_param_files(t_ls *data);
-
-void				show_all(t_ls *data)
-{
-	if (data->flags.f == 0)
-		merge_sort(&data->dir, (data->flags.r == 0) ? 1 : 0);
-
-	while (data->dir)
-	{
-		show_param_dirs(data, data->dir->name);
-		data->dir = data->dir->next;
-	}
-}
-
-static void			show_param_dirs(t_ls *data, char *path) //
-{
-	DIR				*dp;
-	struct dirent	*ep;
-	char			newdir[512];
-
-	ft_printf(BLUE "\n%s:\n" WHITE, path);
-	get_files_names_from_dir(data, path);
-	if (data->flags.f == 0)
-		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
-	show_list(&data->file);
-	delete_list(&data->file);
-	if (data->flags.R)
-	{
-		dp = opendir(path);
-		if(!dp)
-		{
-			perror(path);
-			return ;
-		}
-		while ((ep = readdir(dp)))
-		{
-			if (strncmp(ep->d_name, ".", 1))
-			{
-				if (ep->d_type == 4)
-				{
-					sprintf(newdir, "%s/%s", path, ep->d_name);
-					show_param_dirs(data, newdir);
-				}
-			}
-		}
-		closedir(dp);
-	}
-}
-
-
-
-
-
-/*static void			show_param_dirs(t_ls *data, char *path)		WORKS FASTER
-{
-	DIR				*dp;
-	struct dirent	*ep;
-	char			newdir[512];
-
-	dp = opendir(path);
-	if(!dp)
-	{
-		perror(path);
-		return ;
-	}
-	ft_printf(BLUE "\n%s:\n" WHITE, path);
-	while ((ep = readdir(dp)))
-	{
-		if (strncmp(ep->d_name, ".", 1))
-			printf(GREEN "\t%s\n" WHITE, ep->d_name);
-	}
-	closedir(dp);
-	if (data->flags.R)
-	{
-		dp = opendir(path);
-		while ((ep = readdir(dp)))
-		{
-			if (strncmp(ep->d_name, ".", 1))
-			{
-				if (ep->d_type == 4)
-				{
-					sprintf(newdir, "%s/%s", path, ep->d_name);
-					show_param_dirs(data, newdir);
-				}
-			}
-		}
-		closedir(dp);
-	}
-}*/
-
-/*static void			show_param_dirs(t_ls *data, char *path)		IT WORKS, BUT DONT SORT
-{
-	DIR				*dp;
-	struct dirent	*ep;
-	char			newdir[512];
-
-	dp = opendir(path);
-	if(!dp)
-	{
-		perror(path);
-		return ;
-	}
-	ft_printf(BLUE "\n%s:\n" WHITE, path);
-	while ((ep = readdir(dp)))
-	{
-		if (strncmp(ep->d_name, ".", 1))
-			printf(GREEN "\t%s\n" WHITE, ep->d_name);
-	}
-	closedir(dp);
-	dp = opendir(path);
-	while ((ep = readdir(dp)))
-	{
-		if (strncmp(ep->d_name, ".", 1))
-		{
-			if (data->flags.R && ep->d_type == 4)
-			{
-				sprintf(newdir, "%s/%s", path, ep->d_name);
-				show_param_dirs(data, newdir);
-			}
-		}
-	}
-	closedir(dp);
-}*/
-
-/*static void		show_param_dirs(t_ls *data, char *path)			DO NOT WORK
-{
-	DIR				*dp;
-	struct dirent	*ep;
-	char			newdir[512];
-
-	ft_printf(BLUE "%s:\n" WHITE, path);
-	get_files_names_from_dir(data, path);
-	if (data->flags.f == 0)
-		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
-	show_param_files(data);
-	if (data->flags.R)
-	{
-		dp = opendir(path);
-		while ((ep = readdir(dp)))
-		{
-			if (strncmp(ep->d_name, ".", 1))
-			{
-				if (ep->d_type == 4)
-				{
-					sprintf(newdir, "%s/%s", path, ep->d_name);
-					show_param_dirs(data, newdir);
-				}
-			}
-		}
-		closedir(dp);
-	}
-}*/
-
-void			show_param_files(t_ls *data)
-{
-	if (data->flags.f == 0)
-		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
-	show_list(&data->file);
-	delete_list(&data->file);
-}
-
 static void			get_files_names_from_dir(t_ls *data, char *path)
 {
 	DIR				*dp;
@@ -188,8 +25,59 @@ static void			get_files_names_from_dir(t_ls *data, char *path)
 	while ((ep = readdir(dp)))
 	{
 		if ((data->flags.a || data->flags.f) ||
-			(strncmp(ep->d_name, ".", 1)))
+			(ft_strncmp(ep->d_name, ".", 1)))
 			push(&data->file, ep->d_name);
 	}
 	closedir(dp);
+}
+
+static void			show_param_dirs(t_ls *data, char *path)
+{
+	DIR				*dp;
+	struct dirent	*ep;
+	char			newdir[512];
+
+	ft_printf(BLUE "\n%s:\n" WHITE, path);
+	get_files_names_from_dir(data, path);
+	show_param_files(data);
+	if (data->flags.rec)
+	{
+		dp = opendir(path);
+		if (!dp)
+		{
+			perror(path);
+			return ;
+		}
+		while ((ep = readdir(dp)))
+		{
+			if (ft_strncmp(ep->d_name, ".", 1))
+			{
+				if (ep->d_type == 4)
+				{
+					sprintf(newdir, "%s/%s", path, ep->d_name);
+					show_param_dirs(data, newdir);
+				}
+			}
+		}
+		closedir(dp);
+	}
+}
+
+void inline			show_param_files(t_ls *data)
+{
+	if (data->flags.f == 0)
+		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
+	show_list(&data->file);
+	delete_list(&data->file);
+}
+
+void				show_all(t_ls *data)
+{
+	if (data->flags.f == 0)
+		merge_sort(&data->dir, (data->flags.r == 0) ? 1 : 0);
+	while (data->dir)
+	{
+		show_param_dirs(data, data->dir->name);
+		data->dir = data->dir->next;
+	}
 }

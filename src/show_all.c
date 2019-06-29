@@ -13,52 +13,59 @@
 #include "../includes/libls.h"
 
 static void			get_files_names_from_dir(t_ls *data, char *path);
-static void			show_param_files(t_ls *data);
-static void			show_param_dirs(t_ls *data);
+static void			show_param_dirs(t_ls *data, char *path);
+void				show_param_files(t_ls *data);
 
 void				show_all(t_ls *data)
 {
 	t_list *curr;
 
-	show_param_files(data);
-	show_param_dirs(data);
-
-	/* если параметров не было просто выводим содержимое . */
-	if (data->no_params == 1)
-	{
-		push(&data->dir, ".");
-		get_files_names_from_dir(data, data->dir->name);
-		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
-		show_list(&data->file);
-	}
-}
-
-static void			show_param_dirs(t_ls *data)
-{
-	t_list *curr;
-
 	if (data->flags.f == 0)
 		merge_sort(&data->dir, (data->flags.r == 0) ? 1 : 0);
+
 	curr = data->dir;
 	while (curr)
 	{
-		get_files_names_from_dir(data, curr->name);
-		ft_printf("%s :\n", curr->name);
-		if (data->flags.f == 0)
-			merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
-		show_list(&data->file);
-		delete_list(&data->file);
+		(data->dir_len > 1) ? ft_printf("%s:\n", data->dir->name) : 0;
+		show_param_dirs(data, data->dir->name);
 		curr = curr->next;
-		(curr != NULL) ? write(1, "\n", 1) : 0;
 	}
 }
 
-static void			show_param_files(t_ls *data)
+static void		show_param_dirs(t_ls *data, char *path)
+{
+	DIR				*dp;
+	struct dirent	*ep;
+	char			newdir[512];
+
+	(data->flags.R) ? ft_printf("%s:\n", path) : 0;
+	get_files_names_from_dir(data, path);
+	if (data->flags.f == 0)
+		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
+	show_param_files(data);
+	if (data->flags.R)
+	{
+		dp = opendir(path);
+		while ((ep = readdir(dp)))
+		{
+			if (strncmp(ep->d_name, ".", 1))
+			{
+				if (ep->d_type == 4)
+				{
+					sprintf(newdir, "%s/%s", path, ep->d_name);
+					show_param_dirs(data, newdir);
+				}
+			}
+		}
+		closedir(dp);
+	}
+}
+
+void			show_param_files(t_ls *data)
 {
 	if (data->flags.f == 0)
 		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
 	show_list(&data->file);
-	(data->file != NULL && data->dir != NULL) ? write(1, "\n", 1) : 0;
 	delete_list(&data->file);
 }
 

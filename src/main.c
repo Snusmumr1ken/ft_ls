@@ -19,25 +19,15 @@ int		main(int argc, char **argv)
 	t_ls			data;
 
 	init_data(&data);
-
-	(argc > 1) ? parse_arguments(argc, argv, &data) : 0;
-	(data.flags.h == 1) ? show_help() : show_all(&data);
+	(argc > 1) ? parse_arguments(argc, argv, &data) : push(&data.dir, ".");
+	if (data.flags.h == 0)
+	{
+		show_param_files(&data);
+		show_all(&data);
+	}
+	else
+		show_help();
 	delete_list(&data.dir);
 	delete_list(&data.file);
 	return (0);
 }
-
-
-/*dir = opendir(".");
-if (dir == NULL)
-{
-	perror("opendir");
-	exit(1);
-}
-while ((sd = readdir(dir)) != NULL)
-{
-	if (sd->d_name[0] != '.')
-		ft_printf("%c %s\n", sd->d_type, sd->d_name);
-}*/
-
-//closedir(dir);

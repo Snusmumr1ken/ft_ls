@@ -13,6 +13,9 @@
 #ifndef LIBLS_H
 # define LIBLS_H
 
+# define GREEN   "\x1b[32m"
+# define BLUE    "\x1b[34m"
+# define WHITE   "\x1b[37m"
 
 #include <stdio.h>
 
@@ -46,10 +49,12 @@ typedef struct			s_ls
 	t_flags				flags;
 	t_list				*dir;
 	t_list				*file;
+	unsigned short		dir_len;
+	unsigned short		file_len;
 	bool				no_params;
 }						t_ls;
 
-
+void					show_param_files(t_ls *data);
 void					show_all(t_ls *data);
 void					merge_sort(t_list **head_ref, const int how_to_sort);
 void					show_help(void);

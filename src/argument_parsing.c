@@ -39,27 +39,20 @@ static void		parse_dir_or_file_name(char *arg, t_ls *data)
 
 	dir = opendir(arg);
 	if (errno == 0)
+	{
 		push(&data->dir, arg);
+		data->dir_len++;
+	}
 	else if (errno == 20)
 		push(&data->file, arg);
 	else
 	{
-		printf("arg = <<%s>>\n", arg);
 		perror("ft_ls: unable to get access");
 		delete_list(&data->dir);
 		delete_list(&data->file);
 		exit(2);
 	}
-	errno = 0;
 	(dir) ? closedir(dir) : 0;
-	if (errno)
-	{
-		printf("arg = <<%s>>\n", arg);
-		perror("ft_ls: unable to close dir");
-		delete_list(&data->dir);
-		delete_list(&data->file);
-		exit(2);
-	}
 	data->no_params = 0;
 }
 

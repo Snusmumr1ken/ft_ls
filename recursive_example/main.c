@@ -39,9 +39,12 @@ void		RecDir(char *path, int flag)
 
     /* если директория - открываем ёё рекурсивно */
     dp = opendir(path);
-    while ((ep = readdir(dp))) {
-		if (strncmp(ep->d_name, ".", 1)) {
-			if (flag && ep->d_type == 4) {
+    while ((ep = readdir(dp)))
+    {
+		if (strncmp(ep->d_name, ".", 1))
+		{
+			if (flag && ep->d_type == 4)
+			{
 				sprintf(newdir, "%s/%s", path, ep->d_name);
 				RecDir(newdir, 1);
 			}
@@ -58,7 +61,7 @@ int main(int argc, char **argv)
         if (!(strcmp(argv[1], "-R"))) //и это флаг -R
         	Usage(); //показываем как пользоваться программой
         else // если два параметра и это не флаг -R
-        	RecDir(argv[1], 0); // вызываем рекурсивную функцию чтения со вторым параметром
+        	RecDir(argv[1], 0); // вызываем НЕрекурсивную функцию чтения со вторым параметром
         break;
 
     case 3: // если 3 параметра

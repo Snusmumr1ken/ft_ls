@@ -28,8 +28,7 @@ void				show_all(t_ls *data)
 	}
 }
 
-
-static void			show_param_dirs(t_ls *data, char *path)
+static void			show_param_dirs(t_ls *data, char *path) //
 {
 	DIR				*dp;
 	struct dirent	*ep;

@@ -36,7 +36,9 @@ void			parse_arguments(int argc, char **argv, t_ls *data)
 static void		parse_dir_or_file_name(char *arg, t_ls *data)
 {
 	DIR			*dir;
+	int 		errno;
 
+	errno = 0;
 	dir = opendir(arg);
 	if (errno == 0)
 	{

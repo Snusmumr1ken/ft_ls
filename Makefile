@@ -8,7 +8,7 @@
 #############           Varaibles            #############
 #                                                        #
 FILES = main help argument_parsing work_with_lists \
-		show_all sorting
+		show_all sorting long_output
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ = $(addprefix obj/, $(addsuffix .o, $(FILES)))

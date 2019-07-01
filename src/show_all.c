@@ -80,7 +80,8 @@ void inline			show_param_files(t_ls *data)
 		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
 	else
 		reverse_list(&data->file);
-	show_list(&data->file);
+	//show_list(&data->file);
+	show_long_list(&data->file);
 	delete_list(&data->file);
 }
 

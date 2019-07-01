@@ -25,6 +25,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <stdbool.h>
+# include <time.h>
 
 typedef struct			s_list
 {
@@ -61,6 +62,7 @@ void					parse_arguments(int argc, char **argv, t_ls *data);
 void					init_data(t_ls *data);
 void					delete_list(t_list **head);
 void					show_list(t_list **head);
+void					show_long_list(t_list **head);
 void					push(t_list **head, char *name);
 
 #endif

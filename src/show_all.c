@@ -16,7 +16,9 @@ static void			get_files_names_from_dir(t_ls *data, char *path)
 {
 	DIR				*dp;
 	struct dirent	*ep;
+	int				i;
 
+	i = 0;
 	if ((dp = opendir(path)) == NULL)
 	{
 		perror(path);
@@ -80,4 +82,5 @@ void				show_all(t_ls *data)
 		show_param_dirs(data, data->dir->name);
 		data->dir = data->dir->next;
 	}
+	write(1, "\n", 1);
 }

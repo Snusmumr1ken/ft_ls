@@ -33,6 +33,52 @@ static void			get_files_names_from_dir(t_ls *data, char *path)
 	closedir(dp);
 }
 
+
+
+static void			show_param_dirs(t_ls *data, char *path)
+{
+	DIR				*dp;
+	struct dirent	*ep;
+	char			newdir[512];
+
+	ft_printf(BLUE "\n%s:\n" WHITE, path);
+	get_files_names_from_dir(data, path);
+	show_param_files(data);
+	if (data->flags.rec)
+	{
+		dp = opendir(path);
+		if (!dp)
+		{
+			perror(path);
+			return ;
+		}
+		while ((ep = readdir(dp)))
+		{
+			if (ep->d_type == 4)
+			{
+				if (ft_strncmp(ep->d_name, ".", 1)) // if it simple dir add it to recursion
+				{
+					sprintf(newdir, "%s/%s", path, ep->d_name);
+					show_param_dirs(data, newdir);
+				}
+				else if (data->flags.a || data->flags.f) // if we have flags a or f and it is hidden dir but not . or ..
+				{
+					if (!ft_strncmp(ep->d_name, ".", 1) && ft_strcmp(ep->d_name, ".") &&
+						ft_strcmp(ep->d_name, "..")) // if it is hidden dir, but it is not . and ..
+					{
+						sprintf(newdir, "%s/%s", path, ep->d_name);
+						show_param_dirs(data, newdir);
+					}
+				}
+			}
+		}
+		closedir(dp);
+	}
+}
+
+
+
+/*
 static void			show_param_dirs(t_ls *data, char *path)
 {
 	DIR				*dp;
@@ -63,7 +109,7 @@ static void			show_param_dirs(t_ls *data, char *path)
 		}
 		closedir(dp);
 	}
-}
+}*/
 
 void inline			show_param_files(t_ls *data)
 {

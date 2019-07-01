@@ -50,3 +50,20 @@ void	delete_list(t_list **head)
 	}
 	*head = NULL;
 }
+
+void	reverse_list(t_list **head_ref)
+{
+	t_list *first;
+	t_list *rest;
+
+	if (*head_ref == NULL)
+		return ;
+	first = *head_ref;
+	rest  = first->next;
+	if (rest == NULL)
+		return;
+	reverse_list(&rest);
+	first->next->next = first;
+	first->next = NULL;
+	*head_ref = rest;
+}

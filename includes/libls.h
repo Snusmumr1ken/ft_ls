@@ -55,6 +55,7 @@ typedef struct			s_ls
 void					show_param_files(t_ls *data);
 void					show_all(t_ls *data);
 void					merge_sort(t_list **head_ref, const int how_to_sort);
+void					reverse_list(t_list **head_ref);
 void					show_help(void);
 void					parse_arguments(int argc, char **argv, t_ls *data);
 void					init_data(t_ls *data);

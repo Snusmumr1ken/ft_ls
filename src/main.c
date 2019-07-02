@@ -14,8 +14,6 @@
 
 int		main(int argc, char **argv)
 {
-	DIR				*dir;
-	struct dirent	*sd;
 	t_ls			data;
 
 	init_data(&data);

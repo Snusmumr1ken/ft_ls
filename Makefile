@@ -11,10 +11,8 @@ FILES = main help argument_parsing work_with_lists \
 		show_all sorting long_output
 
 SRC = $(addprefix src/, $(addsuffix .c, $(FILES)))
-OBJ = $(addprefix obj/, $(addsuffix .o, $(FILES)))
+OBJ = $(addsuffix .o, $(FILES))
 
-INC = -I ./includes
-HEADER = ./includes/libls.h
 LIBFT = ./libft/libft.a
 
 NAME = ft_ls
@@ -30,11 +28,11 @@ all: $(NAME)
 .PHONY: all clean
 .NOTPARALLEL: all clean fclean re
 
-$(NAME): $(OBJ) $(HEADER)
-	@gcc -o $(NAME) $(OBJ) $(LIBFT)
+$(NAME): $(OBJ)
+	@gcc $(FLAGS) -o $(NAME) $(OBJ) $(LIBFT)
 
-$(OBJ): obj/%.o : src/%.c $(HEADER) $(LIBFT)
-	@gcc -o $@ $(INC) -c $<
+$(OBJ): $(LIBFT) $(SRC)
+	@gcc -c $(FLAGS) $(SRC)
 
 $(LIBFT):
 	@make -C ./libft

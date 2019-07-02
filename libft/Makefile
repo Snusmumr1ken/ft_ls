@@ -17,7 +17,7 @@ PRINTF_FUNC	= ft_printf ftoa manage_binary manage_char manage_decimal \
 			  useful_functions work_with_format work_with_format2 
 
 LIBFT_SRC = $(addprefix src/, $(addsuffix .c, $(LIBFT_FUNC)))
-LIBFT_OBJ = $(addprefix obj/, $(addsuffix .o, $(LIBFT_FUNC)))
+LIBFT_OBJ = $(addprefix src/, $(addsuffix .o, $(LIBFT_FUNC)))
 
 PRINTF_SRC = $(addprefix ft_printf/, $(addsuffix .c, $(PRINTF_FUNC)))
 PRINTF_OBJ = $(addprefix ft_printf/, $(addsuffix .o, $(PRINTF_FUNC)))
@@ -42,7 +42,7 @@ all: $(NAME)
 $(NAME): $(LIBFT_OBJ) $(PRINTF_OBJ) $(LIBFT_HEADER) $(PRINTF_HEADER)
 	@ar rcs $(NAME) $(LIBFT_OBJ) $(PRINTF_OBJ)	
 
-$(LIBFT_OBJ): obj/%.o : src/%.c $(LIBFT_HEADER)
+$(LIBFT_OBJ): src/%.o : src/%.c $(LIBFT_HEADER)
 	@gcc -o $@ $(FLAGS) $(INC) -c $<
 
 $(PRINTF_OBJ): ft_printf/%.o : ft_printf/%.c $(PRINTF_HEADER)

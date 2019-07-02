@@ -28,9 +28,7 @@ static void			show_link_and_name(const t_list *node)
 			write(1, " -> ", 4);
 			link = malloc(st.st_size + 1);
 			r = readlink(full_name, link, st.st_size + 1);
-			if (r < 0)
-				perror("ft_ls: lstat");
-			if (r > st.st_size)
+			if ((unsigned)r > st.st_size)
 				perror("ft_ls: symlink increased in size ");
 			link[st.st_size] = '\0';
 			write(1, link, st.st_size);

@@ -16,9 +16,7 @@ static void			get_files_names_from_dir(t_ls *data, char *path)
 {
 	DIR				*dp;
 	struct dirent	*ep;
-	int				i;
 
-	i = 0;
 	if ((dp = opendir(path)) == NULL)
 	{
 		perror(path);
@@ -74,7 +72,7 @@ static void			show_param_dirs(t_ls *data, char *path)
 	}
 }
 
-void inline			show_param_files(t_ls *data)
+inline void			show_param_files(t_ls *data)
 {
 	if (data->flags.f == 0)
 		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);

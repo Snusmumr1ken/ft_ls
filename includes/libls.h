@@ -68,5 +68,8 @@ void					delete_list(t_list **head);
 void					show_list(t_list **head);
 void					show_long_list(t_list **head);
 void					push(t_list **head, char *name, char *path);
+void					show_link_and_name(const t_list *node);
+void					show_last_modification(const t_list *node);
+void					show_size(const t_list *node);
 
 #endif

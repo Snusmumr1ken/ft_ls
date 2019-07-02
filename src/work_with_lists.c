@@ -12,13 +12,14 @@
 
 #include "../includes/libls.h"
 
-void	push(t_list **head_ref, char *new_data)
+void	push(t_list **head_ref, char *new_data, char *path)
 {
 	t_list *new_node;
 
 	new_node = (t_list*)malloc(sizeof(t_list));
 
 	new_node->name = ft_strdup(new_data);
+	new_node->path = ft_strjoin(path, "/");
 	new_node->next = (*head_ref);
 	(*head_ref) = new_node;
 }
@@ -45,6 +46,7 @@ void	delete_list(t_list **head)
 	{
 		next = curr->next;
 		free(curr->name);
+		free(curr->path);
 		free(curr);
 		curr = next;
 	}

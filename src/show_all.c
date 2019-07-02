@@ -28,7 +28,7 @@ static void			get_files_names_from_dir(t_ls *data, char *path)
 	{
 		if ((data->flags.a || data->flags.f) ||
 			(ft_strncmp(ep->d_name, ".", 1)))
-			push(&data->file, ep->d_name);
+			push(&data->file, ep->d_name, path);
 	}
 	closedir(dp);
 }
@@ -80,8 +80,10 @@ void inline			show_param_files(t_ls *data)
 		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
 	else
 		reverse_list(&data->file);
-	//show_list(&data->file);
-	show_long_list(&data->file);
+	if (data->flags.l == 0)
+		show_list(&data->file);
+	else
+		show_long_list(&data->file);
 	delete_list(&data->file);
 }
 

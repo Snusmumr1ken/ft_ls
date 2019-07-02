@@ -26,10 +26,14 @@
 # include <errno.h>
 # include <stdbool.h>
 # include <time.h>
+# include <pwd.h>
+# include <grp.h>
+# include <uuid/uuid.h>
 
 typedef struct			s_list
 {
 	char				*name;
+	char 				*path;
 	struct s_list		*next;
 }						t_list;
 
@@ -63,6 +67,6 @@ void					init_data(t_ls *data);
 void					delete_list(t_list **head);
 void					show_list(t_list **head);
 void					show_long_list(t_list **head);
-void					push(t_list **head, char *name);
+void					push(t_list **head, char *name, char *path);
 
 #endif

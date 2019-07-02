@@ -6,7 +6,7 @@
 /*   By: anyvchyk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 10:12:56 by anyvchyk          #+#    #+#             */
-/*   Updated: 2019/02/11 13:19:03 by anyvchyk         ###   ########.fr       */
+/*   Updated: 2019/07/02 12:02:00 by anyvchyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void					*ft_memcpy(void *dest, const void *src, size_t n);
 void					*ft_memmove(void *dest, void *src, size_t n);
 void					ft_strclr(char *s);
 int						ft_strncmp(char *s1, char *s2, unsigned int n);
+char					*ft_strjoin(char const *s1, char const *s2);
 
 #endif

@@ -12,6 +12,37 @@
 
 #include "../includes/libls.h"
 
+static void			show_link_and_name(const t_list *node)
+{
+	struct stat		st;
+	char			*full_name;
+	char			*link;
+	size_t			r;
+
+	ft_printf(GREEN "%s" WHITE, node->name);
+	full_name = ft_strjoin(node->path, node->name);
+	if (lstat(full_name, &st) == 0)
+	{
+		if (S_ISLNK(st.st_mode))
+		{
+			write(1, " -> ", 4);
+			link = malloc(st.st_size + 1);
+			r = readlink(full_name, link, st.st_size + 1);
+			if (r < 0)
+				perror("ft_ls: lstat");
+			if (r > st.st_size)
+				perror("ft_ls: symlink increased in size ");
+			link[st.st_size] = '\0';
+			write(1, link, st.st_size);
+			free(link);
+		}
+	}
+	else
+		perror("ft_ls: stat");
+	free(full_name);
+	write(1, "\n", 1);
+}
+
 static void			show_last_modification(const t_list *node)
 {
 	struct stat		st;
@@ -153,7 +184,7 @@ void				show_long_list(t_list **head)
 		show_user_group(curr);
 		show_size(curr);
 		show_last_modification(curr);
-		ft_printf(GREEN "%s\n" WHITE, curr->name);
+		show_link_and_name(curr);
 		curr = curr->next;
 	}
 }

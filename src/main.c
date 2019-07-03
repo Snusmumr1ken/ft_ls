@@ -29,5 +29,6 @@ int		main(int argc, char **argv)
 		show_help();
 	delete_list(&data.dir);
 	delete_list(&data.file);
+	system("leaks ft_ls");
 	return (0);
 }

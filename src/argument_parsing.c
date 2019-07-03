@@ -31,7 +31,7 @@ static void		parse_dir_or_file_name(char *arg, t_ls *data)
 	dir = opendir(arg);
 	if (errno == 0)
 	{
-		push(&data->dir, arg, "none");
+		push(&data->dir, arg, ".");
 		data->dir_len++;
 	}
 	else if (errno == 20)

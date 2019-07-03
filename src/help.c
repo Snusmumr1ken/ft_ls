@@ -12,7 +12,7 @@
 
 #include "../includes/libls.h"
 
-void	show_help(void)
+void			show_help(void)
 {
 	write(1, "Usage: ft_ls [KEY]... [FILE]...\n\n", 33);
 	write(1, "Show info about files (in current directory by default).\n", 57);
@@ -35,7 +35,7 @@ void	show_help(void)
 	write(1, "  2 - crashes\n", 14);
 }
 
-void	init_data(t_ls *data)
+void			init_data(t_ls *data)
 {
 	data->flags.rec = 0;
 	data->flags.r = 0;

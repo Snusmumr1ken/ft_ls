@@ -47,16 +47,17 @@ static void			show_hard_links(const t_list *node)
 	free(full_name);
 }
 
-static void			show_permissions(const t_list *node)
+static void			show_permissions(t_list *node)
 {
 	struct stat		st;
 	char			modeval[9];
 	char			*full_name;
+	mode_t			perm;
 
 	full_name = ft_strjoin(node->path, node->name);
 	if (lstat(full_name, &st) == 0)
 	{
-		mode_t perm = st.st_mode;
+		perm = st.st_mode;
 		modeval[0] = (perm & S_IRUSR) ? 'r' : '-';
 		modeval[1] = (perm & S_IWUSR) ? 'w' : '-';
 		modeval[2] = (perm & S_IXUSR) ? 'x' : '-';

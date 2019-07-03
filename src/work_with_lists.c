@@ -17,7 +17,6 @@ void	push(t_list **head_ref, char *new_data, char *path)
 	t_list *new_node;
 
 	new_node = (t_list*)malloc(sizeof(t_list));
-
 	new_node->name = ft_strdup(new_data);
 	new_node->path = ft_strjoin(path, "/");
 	new_node->next = (*head_ref);
@@ -61,9 +60,9 @@ void	reverse_list(t_list **head_ref)
 	if (*head_ref == NULL)
 		return ;
 	first = *head_ref;
-	rest  = first->next;
+	rest = first->next;
 	if (rest == NULL)
-		return;
+		return ;
 	reverse_list(&rest);
 	first->next->next = first;
 	first->next = NULL;

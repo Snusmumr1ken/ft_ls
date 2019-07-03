@@ -15,21 +15,18 @@
 static t_list		*merge_sorted_lists_by_time(t_list *a, t_list *b)
 {
 	t_list			*result;
-	struct stat		st_a;
-	struct stat		st_b;
-	char			*a_name;
-	char			*b_name;
+	struct stat		st[2];
+	char			*name[2];
 
 	if (a == NULL)
 		return (b);
 	else if (b == NULL)
 		return (a);
-	a_name = ft_strjoin(a->path, a->name);
-	b_name = ft_strjoin(b->path, b->name);
-	lstat(a_name, &st_a);
-	lstat(b_name, &st_b);
-	result = NULL;
-	if (st_a.st_mtime > st_b.st_mtime)
+	name[0] = ft_strjoin(a->path, a->name);
+	name[1] = ft_strjoin(b->path, b->name);
+	lstat(name[0], &st[0]);
+	lstat(name[1], &st[1]);
+	if (st[0].st_mtime > st[1].st_mtime)
 	{
 		result = a;
 		result->next = merge_sorted_lists_by_time(a->next, b);
@@ -39,14 +36,12 @@ static t_list		*merge_sorted_lists_by_time(t_list *a, t_list *b)
 		result = b;
 		result->next = merge_sorted_lists_by_time(a, b->next);
 	}
-	free(a_name);
-	free(b_name);
+	free(name[0]);
+	free(name[1]);
 	return (result);
 }
 
-
-static t_list		*merge_sorted_lists(t_list *a, t_list *b,
-		const int how_to_sort)
+static t_list		*merge_sorted_lists(t_list *a, t_list *b)
 {
 	t_list *result;
 
@@ -55,16 +50,15 @@ static t_list		*merge_sorted_lists(t_list *a, t_list *b,
 		return (b);
 	else if (b == NULL)
 		return (a);
-	if ((how_to_sort == 1) ? (ft_strcmp(a->name, b->name) < 0) :
-		(ft_strcmp(a->name, b->name) > 0))
+	if (ft_strcmp(a->name, b->name) < 0)
 	{
 		result = a;
-		result->next = merge_sorted_lists(a->next, b, how_to_sort);
+		result->next = merge_sorted_lists(a->next, b);
 	}
 	else
 	{
 		result = b;
-		result->next = merge_sorted_lists(a, b->next, how_to_sort);
+		result->next = merge_sorted_lists(a, b->next);
 	}
 	return (result);
 }
@@ -103,7 +97,7 @@ void				merge_sort(t_list **head_ref, const int how_to_sort)
 	dividing(head, &a, &b);
 	merge_sort(&a, how_to_sort);
 	merge_sort(&b, how_to_sort);
-	*head_ref = (how_to_sort == 1 || how_to_sort == 2) ?
-			merge_sorted_lists(a, b, how_to_sort) :
+	*head_ref = (how_to_sort == 1) ?
+			merge_sorted_lists(a, b) :
 			merge_sorted_lists_by_time(a, b);
 }

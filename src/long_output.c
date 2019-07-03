@@ -108,7 +108,8 @@ void				show_long_list(t_list **head)
 	t_list			*curr;
 
 	curr = *head;
-	//show total func
+	if (curr)
+		show_total(head);
 	while (curr)
 	{
 		show_type(curr);

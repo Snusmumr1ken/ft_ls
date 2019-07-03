@@ -21,7 +21,7 @@ int		main(int argc, char **argv)
 	if (data.flags.h == 0)
 	{
 		(data.file == NULL && data.dir_len == 0) ?
-			push(&data.dir, ".", "none") : 0;
+			push(&data.dir, ".", ".") : 0;
 		show_param_files(&data);
 		show_all(&data);
 	}

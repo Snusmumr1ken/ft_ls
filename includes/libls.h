@@ -58,6 +58,7 @@ typedef struct			s_ls
 }						t_ls;
 
 void					show_param_files(t_ls *data);
+void					show_param_dirs(t_ls *data, char *path);
 void					show_all(t_ls *data);
 void					merge_sort(t_list **head_ref, const int how_to_sort);
 void					reverse_list(t_list **head_ref);
@@ -71,5 +72,6 @@ void					push(t_list **head, char *name, char *path);
 void					show_link_and_name(const t_list *node);
 void					show_last_modification(const t_list *node);
 void					show_size(const t_list *node);
+void					show_total(t_list **head);
 
 #endif

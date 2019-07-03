@@ -41,7 +41,7 @@ void	delete_list(t_list **head)
 	t_list		*next;
 
 	curr = *head;
-	while (curr != NULL)
+	while (curr)
 	{
 		next = curr->next;
 		free(curr->name);
@@ -67,4 +67,26 @@ void	reverse_list(t_list **head_ref)
 	first->next->next = first;
 	first->next = NULL;
 	*head_ref = rest;
+}
+
+void				show_total(t_list **head)
+{
+	struct stat		buf;
+	t_list			*curr;
+	char			*full_name;
+	int 			total;
+
+	total = 0;
+	curr = *head;
+	while (curr)
+	{
+		full_name = ft_strjoin(curr->path, curr->name);
+		if (lstat(full_name, &buf) == 0)
+		{
+			total += buf.st_blocks;
+		}
+		curr = curr->next;
+		free(full_name);
+	}
+	ft_printf("total %d\n", total);
 }

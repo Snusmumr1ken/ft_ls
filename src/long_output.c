@@ -38,6 +38,7 @@ static void			show_hard_links(const t_list *node)
 {
 	struct stat		st;
 	char			*full_name;
+
 	full_name = ft_strjoin(node->path, node->name);
 	if (lstat(full_name, &st) == 0)
 		ft_printf("%3d ", st.st_nlink);

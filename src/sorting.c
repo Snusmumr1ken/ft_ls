@@ -12,6 +12,39 @@
 
 #include "../includes/libls.h"
 
+static t_list		*merge_sorted_lists_by_time(t_list *a, t_list *b)
+{
+	t_list			*result;
+	struct stat		st_a;
+	struct stat		st_b;
+	char			*a_name;
+	char			*b_name;
+
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+	a_name = ft_strjoin(a->path, a->name);
+	b_name = ft_strjoin(b->path, b->name);
+	lstat(a_name, &st_a);
+	lstat(b_name, &st_b);
+	result = NULL;
+	if (st_a.st_mtime > st_b.st_mtime)
+	{
+		result = a;
+		result->next = merge_sorted_lists_by_time(a->next, b);
+	}
+	else
+	{
+		result = b;
+		result->next = merge_sorted_lists_by_time(a, b->next);
+	}
+	free(a_name);
+	free(b_name);
+	return (result);
+}
+
+
 static t_list		*merge_sorted_lists(t_list *a, t_list *b,
 		const int how_to_sort)
 {
@@ -70,5 +103,7 @@ void				merge_sort(t_list **head_ref, const int how_to_sort)
 	dividing(head, &a, &b);
 	merge_sort(&a, how_to_sort);
 	merge_sort(&b, how_to_sort);
-	*head_ref = merge_sorted_lists(a, b, how_to_sort);
+	*head_ref = (how_to_sort == 1 || how_to_sort == 2) ?
+			merge_sorted_lists(a, b, how_to_sort) :
+			merge_sorted_lists_by_time(a, b);
 }

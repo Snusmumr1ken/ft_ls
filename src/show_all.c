@@ -75,7 +75,11 @@ static void			show_param_dirs(t_ls *data, char *path)
 inline void			show_param_files(t_ls *data)
 {
 	if (data->flags.f == 0)
-		merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
+	{
+		(data->flags.t) ? merge_sort(&data->file, 3) :
+			merge_sort(&data->file, (data->flags.r == 0) ? 1 : 0);
+		(data->flags.t && data->flags.r) ? reverse_list(&data->file) : 0;
+	}
 	else
 		reverse_list(&data->file);
 	if (data->flags.l == 0)
@@ -88,7 +92,11 @@ inline void			show_param_files(t_ls *data)
 void				show_all(t_ls *data)
 {
 	if (data->flags.f == 0)
+	{
+		(data->flags.t) ? merge_sort(&data->dir, 3) :
 		merge_sort(&data->dir, (data->flags.r == 0) ? 1 : 0);
+		(data->flags.t && data->flags.r) ? reverse_list(&data->dir) : 0;
+	}
 	while (data->dir)
 	{
 		show_param_dirs(data, data->dir->name);

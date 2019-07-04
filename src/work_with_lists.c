@@ -35,21 +35,21 @@ void	show_list(t_list **head)
 	}
 }
 
-void	delete_list(t_list **head)
+void				delete_list(t_list **head_ref)
 {
-	t_list		*curr;
-	t_list		*next;
+	t_list			*current;
+	t_list			*next;
 
-	curr = *head;
-	while (curr)
+	current = *head_ref;
+	while (current != NULL)
 	{
-		next = curr->next;
-		free(curr->name);
-		free(curr->path);
-		free(curr);
-		curr = next;
+		next = current->next;
+		free(current->name);
+		free(current->path);
+		free(current);
+		current = next;
 	}
-	*head = NULL;
+	*head_ref = NULL;
 }
 
 void	reverse_list(t_list **head_ref)

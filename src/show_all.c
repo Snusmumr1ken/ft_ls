@@ -96,6 +96,18 @@ inline void			show_param_files(t_ls *data)
 	delete_list(&data->file);
 }
 
+void				cycle(t_ls *data, t_list **head)
+{
+	t_list *tmp;
+
+	tmp = *head;
+	while (tmp)
+	{
+		show_param_dirs(data, tmp->name);
+		tmp = tmp->next;
+	}
+}
+
 void				show_all(t_ls *data)
 {
 	if (data->flags.f == 0)
@@ -105,10 +117,6 @@ void				show_all(t_ls *data)
 	}
 	else
 		reverse_list(&data->dir);
-	while (data->dir)
-	{
-		show_param_dirs(data, data->dir->name);
-		data->dir = data->dir->next;
-	}
+	cycle(data, &data->dir);
 	write(1, "\n", 1);
 }

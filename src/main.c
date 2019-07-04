@@ -12,7 +12,7 @@
 
 #include "../includes/libls.h"
 
-int		main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
 	t_ls			data;
 
@@ -21,7 +21,7 @@ int		main(int argc, char **argv)
 	if (data.flags.h == 0)
 	{
 		(data.file == NULL && data.dir_len == 0) ?
-			push(&data.dir, ".", "loool") : 0;
+			push(&data.dir, ".", "lol") : 0;
 		show_param_files(&data);
 		show_all(&data);
 	}
@@ -29,6 +29,25 @@ int		main(int argc, char **argv)
 		show_help();
 	delete_list(&data.dir);
 	delete_list(&data.file);
-	//system("leaks ft_ls");
 	return (0);
+}
+
+void				show_param_dirs(t_ls *data, char *path)
+{
+	DIR				*dp;
+	char			newdir[512];
+
+	ft_printf(BLUE "\n%s:\n" WHITE, path);
+	get_files_names_from_dir(data, path);
+	show_param_files(data);
+	if (data->flags.rec)
+	{
+		dp = opendir(path);
+		if (!dp)
+		{
+			perror(path);
+			return ;
+		}
+		the_great_cycle_for_recursion(data, dp, newdir, path);
+	}
 }

@@ -24,10 +24,15 @@ static void			show_user_group(const t_list *node)
 	{
 		pw = getpwuid(st.st_uid);
 		gr = getgrgid(st.st_gid);
-		write(1, pw->pw_name, ft_strlen(pw->pw_name));
-		write(1, "  ", 2);
-		write(1, gr->gr_name, ft_strlen(gr->gr_name));
-		write(1, " ", 1);
+		if (pw == NULL || gr == NULL)
+			perror("ls: unable to get st_uid or gr_gid");
+		else if (pw != NULL)
+		{
+			write(1, pw->pw_name, ft_strlen(pw->pw_name));
+			write(1, "  ", 2);
+			write(1, gr->gr_name, ft_strlen(gr->gr_name));
+			write(1, " ", 1);
+		}
 	}
 	else
 		perror("ft_ls: stat");

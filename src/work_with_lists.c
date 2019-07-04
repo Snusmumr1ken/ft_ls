@@ -12,9 +12,9 @@
 
 #include "../includes/libls.h"
 
-void	push(t_list **head_ref, char *new_data, char *path)
+void				push(t_list **head_ref, char *new_data, char *path)
 {
-	t_list *new_node;
+	t_list			*new_node;
 
 	new_node = (t_list*)malloc(sizeof(t_list));
 	new_node->name = ft_strdup(new_data);
@@ -23,9 +23,9 @@ void	push(t_list **head_ref, char *new_data, char *path)
 	(*head_ref) = new_node;
 }
 
-void	show_list(t_list **head)
+void				show_list(t_list **head)
 {
-	t_list	*curr;
+	t_list			*curr;
 
 	curr = *head;
 	while (curr)
@@ -52,10 +52,10 @@ void				delete_list(t_list **head_ref)
 	*head_ref = NULL;
 }
 
-void	reverse_list(t_list **head_ref)
+void				reverse_list(t_list **head_ref)
 {
-	t_list *first;
-	t_list *rest;
+	t_list			*first;
+	t_list			*rest;
 
 	if (*head_ref == NULL)
 		return ;
@@ -74,7 +74,7 @@ void				show_total(t_list **head)
 	struct stat		buf;
 	t_list			*curr;
 	char			*full_name;
-	int 			total;
+	int				total;
 
 	total = 0;
 	curr = *head;

@@ -17,8 +17,6 @@
 # define BLUE    "\x1b[34m"
 # define WHITE   "\x1b[37m"
 
-#include <stdio.h>
-
 # include "../libft/includes/libft.h"
 # include <sys/types.h>
 # include <sys/stat.h>

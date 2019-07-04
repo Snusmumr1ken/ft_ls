@@ -60,26 +60,6 @@ static void			the_great_cycle_for_recursion(t_ls *data, DIR *dp,
 	closedir(dp);
 }
 
-void				show_param_dirs(t_ls *data, char *path)
-{
-	DIR				*dp;
-	char			newdir[512];
-
-	ft_printf(BLUE "\n%s:\n" WHITE, path);
-	get_files_names_from_dir(data, path);
-	show_param_files(data);
-	if (data->flags.rec)
-	{
-		dp = opendir(path);
-		if (!dp)
-		{
-			perror(path);
-			return ;
-		}
-		the_great_cycle_for_recursion(data, dp, newdir, path);
-	}
-}
-
 inline void			show_param_files(t_ls *data)
 {
 	if (data->flags.f == 0)
@@ -96,7 +76,7 @@ inline void			show_param_files(t_ls *data)
 	delete_list(&data->file);
 }
 
-void				cycle(t_ls *data, t_list **head)
+static void			cycle(t_ls *data, t_list **head)
 {
 	t_list *tmp;
 

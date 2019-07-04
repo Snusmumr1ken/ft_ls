@@ -6,7 +6,7 @@
 /*   By: anyvchyk <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 10:53:54 by anyvchyk          #+#    #+#             */
-/*   Updated: 2019/02/12 11:19:47 by anyvchyk         ###   ########.fr       */
+/*   Updated: 2019/07/04 10:55:45 by anyvchyk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define WHITE   "\x1b[37m"
 
 # include "../libft/includes/libft.h"
+# include <stdio.h>
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -31,7 +32,7 @@
 typedef struct			s_list
 {
 	char				*name;
-	char 				*path;
+	char				*path;
 	struct s_list		*next;
 }						t_list;
 

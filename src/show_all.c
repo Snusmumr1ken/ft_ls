@@ -76,27 +76,22 @@ inline void			show_param_files(t_ls *data)
 	delete_list(&data->file);
 }
 
-static void			cycle(t_ls *data, t_list **head)
+void				show_param_dirs(t_ls *data, char *path)
 {
-	t_list *tmp;
+	DIR				*dp;
+	char			newdir[512];
 
-	tmp = *head;
-	while (tmp)
+	ft_printf(BLUE "\n%s:\n" WHITE, path);
+	get_files_names_from_dir(data, path);
+	show_param_files(data);
+	if (data->flags.rec)
 	{
-		show_param_dirs(data, tmp->name);
-		tmp = tmp->next;
+		dp = opendir(path);
+		if (!dp)
+		{
+			perror(path);
+			return ;
+		}
+		the_great_cycle_for_recursion(data, dp, newdir, path);
 	}
-}
-
-void				show_all(t_ls *data)
-{
-	if (data->flags.f == 0)
-	{
-		merge_sort(&data->dir, (data->flags.t) ? 2 : 1);
-		(data->flags.r) ? reverse_list(&data->dir) : 0;
-	}
-	else
-		reverse_list(&data->dir);
-	cycle(data, &data->dir);
-	write(1, "\n", 1);
 }

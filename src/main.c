@@ -32,22 +32,27 @@ int					main(int argc, char **argv)
 	return (0);
 }
 
-void				show_param_dirs(t_ls *data, char *path)
+static void			cycle(t_ls *data, t_list **head)
 {
-	DIR				*dp;
-	char			newdir[512];
+	t_list *tmp;
 
-	ft_printf(BLUE "\n%s:\n" WHITE, path);
-	get_files_names_from_dir(data, path);
-	show_param_files(data);
-	if (data->flags.rec)
+	tmp = *head;
+	while (tmp)
 	{
-		dp = opendir(path);
-		if (!dp)
-		{
-			perror(path);
-			return ;
-		}
-		the_great_cycle_for_recursion(data, dp, newdir, path);
+		show_param_dirs(data, tmp->name);
+		tmp = tmp->next;
 	}
+}
+
+void				show_all(t_ls *data)
+{
+	if (data->flags.f == 0)
+	{
+		merge_sort(&data->dir, (data->flags.t) ? 2 : 1);
+		(data->flags.r) ? reverse_list(&data->dir) : 0;
+	}
+	else
+		reverse_list(&data->dir);
+	cycle(data, &data->dir);
+	write(1, "\n", 1);
 }

@@ -6,7 +6,7 @@ This project was done during my study at [UNIT Factory](https://unit.ua).
 
 ---
 
-# About ft_ls
+### About ft_ls
 
 Amongst the numerous options available, I've done the following: -l, -R, -a, -r, -h, -f and -t.
 

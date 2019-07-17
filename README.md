@@ -32,3 +32,5 @@ Exit codes:
   1 - minor errors
   2 - crashes
   ```
+---
+
